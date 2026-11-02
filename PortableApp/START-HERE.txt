@@ -1,0 +1,1 @@
+After downloading the completed Windows build, double-click PortableScribe.exe. Enter your own OpenAI API key once. The app remembers it locally. Keep AppData private and never share it with family members.
