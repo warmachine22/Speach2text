@@ -4,3 +4,9 @@ dist-electron/
 release/
 portable-data/
 vendor/ffmpeg/*.exe
+
+PortableApp/*.exe
+PortableApp/AppData/
+PortableApp/Transcriptions/
+AppData/
+Transcriptions/
