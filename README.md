@@ -17,3 +17,9 @@ The key is encrypted with AES-256-GCM and a password-derived scrypt key in `AppD
 
 ## MVP limitations
 Audio is converted locally to mono 16 kHz MP3, split into 8-minute chunks and sent sequentially. The API's 25 MB per-file limit is checked. Progress is per chunk; speaker labels, timestamps, retries across restarts, and transcript editing are not implemented yet. Test the packaged EXE on a clean Windows 10/11 PC before distribution.
+
+
+## Portable family use (updated)
+The Windows GitHub Actions workflow builds a **clean PortableApp folder** containing a no-install PortableScribe.exe and a start guide. The downloadable artifact is named `PortableApp-Windows`. The repository's `PortableApp/` folder contains instructions only until a built executable is added separately. Windows build and runtime still need verification.
+
+The app now **remembers the API key automatically** in `AppData/credentials.json` next to the portable EXE. **The key is stored as plaintext**, not encrypted. Do not commit or share `AppData/`; distribute a clean app folder and let each family member enter their own key. Transcripts are stored in `Transcriptions/` beside the EXE. See `AGENTS.md` and `docs/ARCHITECTURE.md`.
