@@ -1,0 +1,1 @@
+interface Window{scribe:{status():Promise<{configured:boolean;folder:string;ffmpeg:boolean}>;saveKey(key:string):Promise<void>;chooseFile():Promise<string|null>;transcribe(file:string,context:string):Promise<{text:string}>;list():Promise<{id:string;title:string;date:string}[]>;read(id:string):Promise<string>;openFolder():Promise<void>;onProgress(fn:(msg:string)=>void):()=>void}}

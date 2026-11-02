@@ -1,0 +1,28 @@
+name: Windows portable build
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install FFmpeg binaries
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force vendor/ffmpeg | Out-Null
+          Invoke-WebRequest 'https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip' -OutFile ffmpeg.zip
+          Expand-Archive ffmpeg.zip -DestinationPath ffmpeg-extracted
+          Copy-Item (Get-ChildItem ffmpeg-extracted -Filter ffmpeg.exe -Recurse | Select-Object -First 1).FullName vendor/ffmpeg/ffmpeg.exe
+          Copy-Item (Get-ChildItem ffmpeg-extracted -Filter ffprobe.exe -Recurse | Select-Object -First 1).FullName vendor/ffmpeg/ffprobe.exe
+      - run: npm install
+      - run: npm run check
+      - run: npm run dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PortableScribe-Windows
+          path: release/*.exe
