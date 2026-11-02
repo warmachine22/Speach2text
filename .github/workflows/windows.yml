@@ -22,7 +22,13 @@ jobs:
       - run: npm install
       - run: npm run check
       - run: npm run dist
+      - name: Prepare clean portable app folder
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force PortableApp | Out-Null
+          Copy-Item (Get-ChildItem release -Filter '*.exe' | Select-Object -First 1).FullName PortableApp/PortableScribe.exe
+          Set-Content PortableApp/START-HERE.txt 'Double-click PortableScribe.exe. Enter your own OpenAI API key. Do not share AppData because it contains your saved API key.'
       - uses: actions/upload-artifact@v4
         with:
-          name: PortableScribe-Windows
-          path: release/*.exe
+          name: PortableApp-Windows
+          path: PortableApp/
